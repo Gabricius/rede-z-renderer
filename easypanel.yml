@@ -1,0 +1,43 @@
+# Reference config for the Easypanel slot. Easypanel is configured via its UI,
+# but this file documents the intended deployment so the repo is self-describing.
+#
+# Slot 3 (rede-z-renderer) — sibling of slots 1 (n8n) and 2 (EdgeTTS).
+
+service:
+  name: rede-z-renderer
+  source:
+    type: github
+    repo: <YOUR_GITHUB_ORG>/rede-z-renderer
+    branch: main
+    autoDeploy: true
+  build:
+    type: dockerfile
+    dockerfile: Dockerfile
+  ports:
+    - host: 8080
+      container: 8080
+      protocol: http
+      internal: true   # do NOT expose to the public internet; only the n8n container talks to it
+  env:
+    OUTPUT_TMP_DIR: /tmp/rede-z
+    RCLONE_CONFIG: /root/.config/rclone/rclone.conf
+    MAX_FFMPEG_THREADS: "0"
+    FFMPEG_NICE: "10"
+    RCLONE_REMOTE: gdrive
+    KEEP_TMP_ON_SUCCESS: "false"
+    # CALLBACK_TOKEN — set as a SECRET in Easypanel, not in the repo
+  volumes:
+    - name: rede-z-tmp
+      mountPath: /tmp/rede-z
+      size: 50Gi
+    - name: rclone-conf
+      mountPath: /root/.config/rclone
+      readOnly: true
+  resources:
+    # Leave at least 1 vCPU + 1 GiB free for slot 1 (n8n) and slot 2 (EdgeTTS).
+    cpu: "shared"     # let the OS schedule; ffmpeg runs at nice 10 already
+    memory: "auto"
+  healthcheck:
+    path: /health
+    interval: 30s
+    timeout: 5s

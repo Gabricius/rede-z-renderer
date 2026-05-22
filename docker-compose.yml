@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  rede-z-renderer:
+    build: .
+    container_name: rede-z-renderer
+    ports:
+      - "8080:8080"
+    environment:
+      OUTPUT_TMP_DIR: /tmp/rede-z
+      RCLONE_CONFIG: /root/.config/rclone/rclone.conf
+      CALLBACK_TOKEN: ${CALLBACK_TOKEN:-dev-token}
+      MAX_FFMPEG_THREADS: "0"
+      FFMPEG_NICE: "10"
+      RCLONE_REMOTE: gdrive
+      KEEP_TMP_ON_SUCCESS: "true"
+    volumes:
+      - ./local-rclone.conf:/root/.config/rclone/rclone.conf:ro
+      - rede-z-tmp:/tmp/rede-z
+    restart: unless-stopped
+
+volumes:
+  rede-z-tmp:

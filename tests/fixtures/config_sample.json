@@ -1,0 +1,39 @@
+{
+  "jobId": "test-job-001",
+  "folders": {
+    "audios": "DRIVE_FOLDER_ID_AUDIOS",
+    "visuais": "DRIVE_FOLDER_ID_VISUAIS",
+    "drones": "DRIVE_FOLDER_ID_DRONES",
+    "overlays": "DRIVE_FOLDER_ID_OVERLAYS",
+    "output": "DRIVE_FOLDER_ID_OUTPUT"
+  },
+  "audioFiles": ["narration_part_01.mp3", "narration_part_02.mp3"],
+  "drones": [
+    {"source": "drone_intro.mp4", "boomerang": true, "duration": 12.0}
+  ],
+  "visuals": [
+    {"source": "img_001.jpg", "kind": "image", "duration": 18.0, "effect": "zoompan_in"},
+    {"source": "img_002.jpg", "kind": "image", "duration": 22.0, "effect": "zoompan_out"},
+    {"source": "img_003.jpg", "kind": "image", "duration": 15.0, "effect": "static"}
+  ],
+  "overlayRec": {"source": "overlay_rec.mp4", "x": 1700, "y": 60},
+  "srtBlocks": [
+    {"start": 0.0, "end": 4.5, "text": "Linha de teste 1"},
+    {"start": 4.5, "end": 9.0, "text": "Linha de teste 2 com\nquebra de linha"}
+  ],
+  "fontPath": "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+  "antiFingerprint": {
+    "crf_final": 22,
+    "audio_bitrate": "192k"
+  },
+  "output": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "pix_fmt": "yuv420p",
+    "container": "mp4",
+    "filename": "final.mp4"
+  },
+  "callbackUrl": "https://n8n.example.com/webhook/render-done",
+  "callbackToken": "test-token"
+}
