@@ -11,6 +11,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         curl \
         ca-certificates \
         procps \
+        bc \
+        gawk \
+        coreutils \
+        findutils \
+        grep \
+        sed \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/rede-z-renderer
