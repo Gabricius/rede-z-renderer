@@ -325,6 +325,7 @@ async def run_bash_pipeline(cfg: BashRenderConfig, base_dir: Path) -> JobStatus:
         status="queued",
         pid=os.getpid(),
         startedAt=started_at,
+        meta=cfg.meta,                          # echoed back to n8n in the callback
     )
     write_status(workdir, status)
 
