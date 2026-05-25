@@ -1,4 +1,8 @@
-FROM python:3.12-slim
+# Pinned to bookworm (ffmpeg 5.x) — the 'slim' default tracks trixie which ships
+# ffmpeg 7.x, where the xfade filter rejects inputs with timebase 1/0 even when
+# fps= is applied. The original VM ran ffmpeg 5.x so we match that to avoid
+# rewriting the bash filter graphs.
+FROM python:3.12-slim-bookworm
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
