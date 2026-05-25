@@ -128,3 +128,6 @@ class JobStatus(BaseModel):
     finalDriveId: Optional[str] = None
     errorMsg: Optional[str] = None
     logTail: Optional[str] = None
+    # Echoed back from cfg.meta so the n8n webhook can reach the original
+    # Trello card id, character name, etc without round-tripping a lookup.
+    meta: Dict[str, Any] = Field(default_factory=dict)
